@@ -58,7 +58,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="Local Marketplace",
         default_version="v1.0.0",
-        description="This is set of API Endpoints for business to use our set of API's in their applications.",
+        description="This is set of API's for business to integrate our services in their applications.",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="abcd@example.com"),
         license=openapi.License(name="BSD License"),
