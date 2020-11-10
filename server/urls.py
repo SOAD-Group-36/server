@@ -5,6 +5,7 @@ from server.swagger import swagger_urls
 
 
 urlpatterns = [
+    path("", include("home.urls")),
     path("admin/", admin.site.urls),
     path("api/", include("sellers.urls")),
     path("api/", include("products.urls")),
