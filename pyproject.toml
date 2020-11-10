@@ -1,5 +1,6 @@
 [tool.black]
 line-length = 108
+skip-string-normalization = true
 target-version = ['py37']
 include = '\.pyi?$'
 exclude = '''

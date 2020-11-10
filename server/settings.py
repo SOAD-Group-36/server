@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "sellers",
     "products",
     "orders",
+    "delivery",
 ]
 
 MIDDLEWARE = [
