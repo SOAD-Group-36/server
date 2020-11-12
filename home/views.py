@@ -11,7 +11,7 @@ class HomePage(View):
         if request.GET.get('query', None):
             query = request.GET['query']
             products = products.filter(
-                Q(name__contains=query) | Q(description__contains=query) & Q(stock__gt=0)
+                (Q(name__contains=query) | Q(description__contains=query)) & Q(stock__gt=0)
             )
         context = {'products': products, 'exists': products.count() > 0}
         return render(request, 'home/index.html', context=context)

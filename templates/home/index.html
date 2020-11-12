@@ -6,7 +6,7 @@
 
   <div class="uk-padding">
 
-    <div class="uk-grid-large uk-child-width-1-4@s uk-flex-center uk-text-cente" uk-grid>
+    <div class="uk-grid-large uk-child-width-1-4@s uk-flex-center uk-text-cente" uk-grid uk-scrollspy="cls: uk-animation-fade; target: .uk-card; delay: 100; repeat: true">
       {% if not exists %}
         <p class="uk-text-large uk-width-1-2@l uk-text-center">
           Sorry, We couldn't find what you wanted.
@@ -45,7 +45,7 @@
               <h3 class="uk-card-title">{{ product.name }}</h3>
               <p>{{ product.description| truncatewords:40 }}</p>
               {% if product.stock < 5 %}
-                <div class="uk-card-badge uk-label-warning uk-label"> Few Left</div>
+                <div class="uk-card-badge uk-label-warning uk-label">Only {{ product.stock }} Left</div>
               {% endif %}
             </div>
             <div class="uk-card-footer">
