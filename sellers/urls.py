@@ -1,6 +1,8 @@
-from django.urls import path
+from rest_framework.routers import DefaultRouter
+
 from sellers import views
 
-urlpatterns = [
-    path("seller", views.SellerCreateView.as_view(), name="seller_create"),
-]
+router = DefaultRouter()
+router.register('seller', views.SellerViewSet, basename='seller')
+
+urlpatterns = [*router.urls]

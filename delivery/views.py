@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, mixins
-from . import models
-from . import serializers
+from delivery import models
+from delivery import serializers
 
 
 class LogisticViewset(

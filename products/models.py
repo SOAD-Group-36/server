@@ -11,10 +11,10 @@ class Product(models.Model):
     length = models.IntegerField("Length(mm)")
     height = models.IntegerField("Height(mm)")
     width = models.IntegerField("Width(mm)")
-    images = models.ManyToManyField("products.ProductImage")
 
 
 class ProductImage(models.Model):
+    product = models.ForeignKey('products.Product', on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to="product/images")
 
     @property
