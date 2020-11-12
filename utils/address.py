@@ -3,6 +3,8 @@ import json
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils import formats
+from django.utils.safestring import mark_safe
 from drf_yasg import openapi
 from rest_framework import serializers
 
@@ -167,7 +169,6 @@ class AddressWidget(forms.MultiWidget):
         super(AddressWidget, self).__init__(widgets, attrs)
 
     def decompress(self, value):
-        print('decompress', value)
         if value and type(value) == Address:
             return value.as_list()
         else:
@@ -199,14 +200,12 @@ class AddressFormField(forms.MultiValueField):
         return result
 
     def prepare_value(self, value):
-        print('prepare', value)
         return value
 
     def validate(self, value):
         pass
 
     def compress(self, data_list):
-        print('compress', data_list)
         if type(data_list) is list:
             return Address(*data_list)
         if type(data_list) is dict:

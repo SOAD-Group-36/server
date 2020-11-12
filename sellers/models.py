@@ -13,3 +13,8 @@ class Seller(Business):
     gst = models.CharField(unique=True, max_length=13)
     date_joined = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'email'
+
+    def __str__(self):
+        return self.first_name + self.last_name

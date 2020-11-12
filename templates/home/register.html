@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Register - Local Marketplace {% endblock %}
+{% block body %}
+
+  <div class="uk-card uk-card-primary uk-card-body uk-width-1-3@m uk-align-center">
+
+    <form method="post" class="uk-form-horizontal uk-margin-large">
+      {% csrf_token %}
+      <legend class="uk-legend uk-text-center">Register</legend>
+      {% if form.errors %}
+        {% for field, message in form.error_messages.items %}
+          <label class="uk-margin uk-label-danger">{{ message }}</label>
+        {% endfor %}
+      {% endif %}
+      {% for field in form %}
+        <div class="uk-margin">
+          <label class="uk-form-label" for="form-horizontal-text">{{ field.label }}
+          </label>
+          <div class="uk-form-controls">
+            <input class="uk-input" required id="form-horizontal-text" name="{{ field.name }}"
+                   type="{{ field.widget_type }}" placeholder="{{ field.label }}">
+          </div>
+        </div>
+      {% endfor %}
+
+      <p class="uk-margin">
+        <button class="uk-button uk-button-default uk-align-center uk-width-1-1@l"
+                type="submit">Create Account
+        </button>
+      </p>
+    </form>
+  </div>
+
+{% endblock %}
