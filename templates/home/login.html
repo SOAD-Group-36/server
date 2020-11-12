@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Login - Local Marketplace {% endblock %}
 {% block body %}
-  <div class="uk-card uk-card-primary uk-card-body uk-width-1-4@m uk-align-center">
+  <div class="uk-card uk-card-default uk-card-body uk-width-1-4@m uk-align-center">
 
     <form method="post" class="uk-form-horizontal uk-margin-large uk-text-center">
       {% csrf_token %}
@@ -16,7 +16,10 @@
       </div>
 
       <p class="uk-margin">
-        <button class="uk-button uk-button-default" type="submit">Log Me In</button>
+        <button class="uk-button uk-button-primary" type="submit">Log Me In</button>
+      </p>
+      <p class="uk-margin">
+        <a href="{% url 'register' %}"> Create A New Account</a>
       </p>
 
     </form>
