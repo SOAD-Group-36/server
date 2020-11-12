@@ -7,6 +7,11 @@
   <div class="uk-padding">
 
     <div class="uk-grid-large uk-child-width-1-4@s uk-flex-center uk-text-cente" uk-grid>
+      {% if not exists %}
+        <p class="uk-text-large uk-width-1-2@l uk-text-center">
+          Sorry, We couldn't find what you wanted.
+        </p>
+      {% endif %}
       {% for product in products %}
         <div>
           <div class="uk-card uk-card-small uk-card-hover uk-card-default">
@@ -22,12 +27,13 @@
                            alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
                     </li>
                   {% endfor %}
-                  <li>
-                    <img data-src="{% static 'product.jpg' %}" width="1800" height="1200"
-                         alt="" uk-cover uk-img="target: !* -*, !* +*">
-                  </li>
+                  {% if product.images.count == 0 %}
+                    <li>
+                      <img data-src="{% static 'product.png' %}" width="1800" height="1200"
+                           alt="" uk-cover uk-img="target: !* -*, !* +*">
+                    </li>
+                  {% endif %}
                 </ul>
-
                 <a class="uk-position-center-left uk-position-small uk-hidden-hover"
                    href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
                 <a class="uk-position-center-right uk-position-small uk-hidden-hover"
@@ -38,6 +44,9 @@
             <div class="uk-card-body">
               <h3 class="uk-card-title">{{ product.name }}</h3>
               <p>{{ product.description| truncatewords:40 }}</p>
+              {% if product.stock < 5 %}
+                <div class="uk-card-badge uk-label-warning uk-label"> Few Left</div>
+              {% endif %}
             </div>
             <div class="uk-card-footer">
               <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
