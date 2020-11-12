@@ -52,6 +52,11 @@
             <a href="{% url 'login' %}">
               <span class="uk-icon uk-margin-small-right" uk-icon="icon: user"></span> Login/Register
             </a>
+            <div class="uk-navbar-dropdown">
+              <ul class="uk-nav uk-navbar-dropdown-nav">
+                <li><a href="{% url 'seller_register' %}">Seller Register</a></li>
+              </ul>
+            </div>
           {% endif %}
 
         </li>
