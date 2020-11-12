@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load fullurl %}
 {% block title %}Home - Local Marketplace {% endblock %}
 {% block body %}
 
   <div class="uk-padding">
 
     <div class="uk-grid-large uk-child-width-1-4@s uk-flex-center uk-text-cente" uk-grid>
-      {% for i in '1234567890' %}
+      {% for product in products %}
         <div>
           <div class="uk-card uk-card-small uk-card-hover uk-card-default">
             <div class="uk-card-media-top">
@@ -14,17 +15,16 @@
                    uk-slideshow>
 
                 <ul class="uk-slideshow-items">
-                  <li>
-                    <img data-src="{% static 'product.jpg' %}" width="1800" height="1200"
-                         alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
-                  </li>
+                  {% for images in product.images.all %}
+                    <li>
+                      <img data-src="{% buildfullurl images.url %}"
+                           width="{{ images.image.width }}" height="{{ images.image.height }}"
+                           alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
+                    </li>
+                  {% endfor %}
                   <li>
                     <img data-src="{% static 'product.jpg' %}" width="1800" height="1200"
                          alt="" uk-cover uk-img="target: !* -*, !* +*">
-                  </li>
-                  <li>
-                    <img data-src="{% static 'product.jpg' %}" width="1800" height="1200"
-                         alt="" uk-cover uk-img="target: !* -*, !ul > :first-child">
                   </li>
                 </ul>
 
@@ -36,8 +36,8 @@
               </div>
             </div>
             <div class="uk-card-body">
-              <h3 class="uk-card-title">Media Top</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+              <h3 class="uk-card-title">{{ product.name }}</h3>
+              <p>{{ product.description| truncatewords:40 }}</p>
             </div>
             <div class="uk-card-footer">
               <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">

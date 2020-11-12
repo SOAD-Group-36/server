@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login - Local Marketplace {% endblock %}
+{% block body %}
+  <div class="uk-card uk-card-primary uk-card-body uk-width-1-4@m uk-align-center">
+
+    <form method="post" class="uk-form-horizontal uk-margin-large uk-text-center">
+      {% csrf_token %}
+      <legend class="uk-legend">Login</legend>
+
+      <div class="uk-margin">
+        <input class="uk-input" name="username" type="text" placeholder="Username">
+      </div>
+      <div class="uk-margin">
+        <input class="uk-input" name="password" type="password" placeholder="Password">
+      </div>
+
+      <p class="uk-margin">
+        <button class="uk-button uk-button-default" type="submit">Log Me In</button>
+      </p>
+
+    </form>
+  </div>
+{% endblock %}

@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'django_seed',
     "drf_yasg",
+    "fullurl",
     "users",
     "sellers",
     "products",
@@ -65,6 +66,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "server.wsgi.application"
 
@@ -123,6 +125,12 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
+
+LOGIN_UR = '/login'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/'
 
 SWAGGER_SETTINGS = {
     "DEFAULT_AUTO_SCHEMA_CLASS": "server.swagger.ReadWriteAutoSchema",
