@@ -8,6 +8,8 @@ from django.db import models
 class User(AbstractUser):
     mobile = models.CharField(unique=True, max_length=12)
 
+    is_business = False
+    
     @property
     def full_name(self):
         return self.get_full_name()
@@ -25,6 +27,10 @@ class Business(models.Model):
     id = models.UUIDField(primary_key=True, unique=True, default=uuid4)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
+
+    is_superuser = False
+    is_anonymous = False
+    is_business = True
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)

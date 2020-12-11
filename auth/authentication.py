@@ -1,3 +1,5 @@
+from users.models import ApiKey
+from requests.api import request
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
 from rest_framework.exceptions import AuthenticationFailed
 from delivery.models import LogisticServices
@@ -24,7 +26,7 @@ class ApiKeyAuthentication(BaseAuthentication):
         if not auth or auth[0].lower() != self.keyword.lower().encode():
             return None
 
-        if len(auth) != 1:
+        if len(auth) != 2:
             msg = 'Invalid token header. Token string should not contain spaces.'
             raise AuthenticationFailed(msg)
 
@@ -48,7 +50,6 @@ class ApiKeyAuthentication(BaseAuthentication):
 
         if not token.business and not hasattr(token.business, self.related_name):
             raise AuthenticationFailed('User inactive or deleted.')
-
         return (getattr(token.business, self.related_name), token)
 
     def authenticate_header(self, request):
@@ -58,10 +59,10 @@ class ApiKeyAuthentication(BaseAuthentication):
 class LogisticServicesAuthentication(ApiKeyAuthentication):
     keyword = 'Delivery'
     related_name = 'logistic_services'
-    model = LogisticServices
+    model = ApiKey
 
 
 class SellerServicesAuthentication(ApiKeyAuthentication):
     keyword = 'Seller'
     related_name = 'seller'
-    model = Seller
+    model = ApiKey

@@ -1,3 +1,5 @@
+from auth.permissions import IsAuthenticated
+from auth.authentication import SellerServicesAuthentication
 from django.shortcuts import render, redirect
 from django.views import View
 from rest_framework import mixins
@@ -11,6 +13,8 @@ from sellers.serializers import SellerSerializer
 
 
 class SellerViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, GenericViewSet):
+    authentication_classes = (SellerServicesAuthentication, )
+    permission_classes = (IsAuthenticated, )
     parser_classes = (JSONParser,)
     renderer_classes = (JSONRenderer,)
     queryset = Seller.objects.all()

@@ -134,4 +134,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 SWAGGER_SETTINGS = {
     "DEFAULT_AUTO_SCHEMA_CLASS": "server.swagger.ReadWriteAutoSchema",
+    'SECURITY_DEFINITIONS': {
+        'Delivery': {'type': 'apiKey', 'name': 'Authorization', 'in': 'header'},
+        'Seller': {'type': 'apiKey', 'name': 'Authorization', 'in': 'header'},
+    },
 }
