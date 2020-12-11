@@ -60,6 +60,7 @@ class LogisticServicesAuthentication(ApiKeyAuthentication):
     related_name = 'logistic_services'
     model = LogisticServices
 
+
 class SellerServicesAuthentication(ApiKeyAuthentication):
     keyword = 'Seller'
     related_name = 'seller'

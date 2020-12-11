@@ -28,7 +28,6 @@ class Command(BaseCommand):
                 'stock': lambda x: seeder.faker.pyint(min_value=0, max_value=99),
                 'weight': lambda x: seeder.faker.pyint(min_value=10, max_value=9999),
                 'height': lambda x: seeder.faker.pyint(min_value=10, max_value=9999),
-                
             },
         )
         seeder.execute()

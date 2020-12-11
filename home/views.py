@@ -32,10 +32,11 @@ class ProductDetailView(LoginRequiredMixin, View):
         context = {'product': product, 'form': OrderPlaceForm()}
         return render(request, 'home/product.html', context=context)
 
+
 class ProductOrderPlaceView(LoginRequiredMixin, View):
     def get(self, request, product_id):
         return redirect('home:product', product_id=product_id)
-    
+
     def post(self, request, product_id):
         try:
             product = Product.objects.get(id=product_id)
@@ -46,14 +47,16 @@ class ProductOrderPlaceView(LoginRequiredMixin, View):
             address, quantity = form.cleaned_data.get('address'), form.cleaned_data.get('quantity')
             user = request.user
             price = product.price * quantity
-            order = Order.objects.create(user=user, address=address, quantity=quantity, product=product, price=price)
+            order = Order.objects.create(
+                user=user, address=address, quantity=quantity, product=product, price=price
+            )
 
             # Notify Seller
             if product.seller.webhook_url:
                 print("Notifying Seller")
                 serializer = OrderSerializer(order)
                 res = requests.request('POST', product.seller.webhook_url, json=serializer.data)
-            
+
             return redirect('home:home')
         print(form.errors)
         return render(request, 'home/product.html', context={'product': product, 'form': form})
