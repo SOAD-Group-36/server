@@ -8,6 +8,18 @@ from django.db import models
 class User(AbstractUser):
     mobile = models.CharField(unique=True, max_length=12)
 
+    @property
+    def full_name(self):
+        return self.get_full_name()
+
+    @full_name.setter
+    def set_full_name(self, name):
+        names = name.split()
+        if len(names) > 0:
+            self.first_name = names[0]
+        if len(names) > 1:
+            self.last_name = ' '.join(names[1:])
+
 
 class Business(models.Model):
     id = models.UUIDField(primary_key=True, unique=True, default=uuid4)
@@ -34,5 +46,6 @@ class Business(models.Model):
 
 
 class ApiKey(models.Model):
+    name = models.CharField(max_length=100, default='Unnamed')
     key = models.UUIDField(default=uuid4)
     business = models.ForeignKey("users.Business", on_delete=models.CASCADE, related_name="api_keys")

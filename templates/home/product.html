@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load fullurl %}
+
+{% block body %}
+
+<div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+    <div class="uk-card-media-left uk-cover-container">
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+
+            <ul class="uk-slideshow-items">
+                {% for images in product.images.all %}
+                <li>
+                    <img data-src="{% buildfullurl images.url %}" width="{{ images.image.width }}"
+                        height="{{ images.image.height }}" alt="" uk-cover uk-img="target: !ul > :last-child, !* +*">
+                </li>
+                {% endfor %}
+                {% if product.images.count == 0 %}
+                <li>
+                    <img data-src="{% static 'product.png' %}" width="1800" height="1200" alt="" uk-cover
+                        uk-img="target: !* -*, !* +*">
+                </li>
+                {% endif %}
+            </ul>
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+                uk-slideshow-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+                uk-slideshow-item="next"></a>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card-body">
+            <h3 class="uk-card-title">{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            {% if product.stock < 5 %}
+            <div class="uk-card-badge uk-label-warning uk-label">Only {{ product.stock }} Left</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+    <div class="uk-card-footer">
+        <form action="{% url 'home:place_order' product.id %}" method="POST">
+            {% csrf_token %}
+            {% if form.errors %}
+            {% for field, message in form.error_messages.items %}
+            <label class="uk-margin uk-label-danger">{{ message }}</label>
+            {% endfor %}
+            {% endif %}
+            {% for field in form %}
+            {% if field.widget_type == 'address' %}
+            {% for ad_field in form.address_fields %}
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">
+                    {{ ad_field.attrs.placeholder }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="form-horizontal-text" name="{{ ad_field.name }}"
+                        type="{{ ad_field.widget_type }}" placeholder="{{ ad_field.attrs.placeholder }}" {% if ad_field.required %} required {% endif %}>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">{{ field.label }}
+                </label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" required id="form-horizontal-text" name="{{ field.name }}"
+                        type="{{ field.widget_type }}" placeholder="{{ field.label }}">
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <button class="uk-button u  k-button-primary uk-width-1-1 uk-margin-small-bottom">
+                Buy Now
+            </button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
