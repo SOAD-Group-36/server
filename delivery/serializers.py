@@ -1,8 +1,10 @@
 from rest_framework.fields import CharField
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer,SlugRelatedField
 
-from .models import LogisticServices
+from .models import LogisticServices,Delivery
 from utils.address import AddressSerializerField
+from orders.serializers import OrderSerializer
+
 
 
 class LogisticSerializer(ModelSerializer):
@@ -19,4 +21,24 @@ class LogisticSerializer(ModelSerializer):
             'phone',
             'pan',
             'gst',
+        ]
+
+class DeliverySerializer(ModelSerializer):
+    order = OrderSerializer(read_only=True)
+    service = LogisticSerializer(read_only=True)
+    origin = AddressSerializerField()
+    current = AddressSerializerField()
+    destination = AddressSerializerField()
+    receiver = SlugRelatedField("full_name", read_only=True)
+    class Meta:
+        model = Delivery
+        fields = [
+            'order',
+            'service',
+            'current',
+            'origin',
+            'destination',
+            'receiver',
+            'status',
+
         ]

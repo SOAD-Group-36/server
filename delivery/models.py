@@ -17,6 +17,8 @@ class LogisticServices(Business):
     gst = models.CharField(unique=True, max_length=13)
     date_joined = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+    webhook_url = models.URLField(blank=True, null=True)
+    
 
 
 class Delivery(models.Model):

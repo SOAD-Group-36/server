@@ -1,7 +1,7 @@
 from rest_framework.fields import CharField
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer,Serializer,PrimaryKeyRelatedField
 
-from sellers.models import Seller
+from sellers.models import Seller,SellerDelivery
 from utils.address import AddressSerializerField
 
 
@@ -23,3 +23,7 @@ class SellerSerializer(ModelSerializer):
             'gst',
         ]
         extra_kwagrs = {'id': {'read_only': True}}
+
+class SellerDeliverySerializer(Serializer):
+    order = PrimaryKeyRelatedField()
+    serviceid = PrimaryKeyRelatedField()
