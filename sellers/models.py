@@ -5,6 +5,8 @@ from utils.address import AddressField
 
 
 class Seller(Business):
+    is_seller = True
+
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     phone = models.CharField(unique=True, max_length=13)

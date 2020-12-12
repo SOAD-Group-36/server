@@ -7,6 +7,8 @@ from utils import AddressField
 
 
 class LogisticServices(Business):
+    is_logistic_service = True
+
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     phone = models.CharField(unique=True, max_length=13)

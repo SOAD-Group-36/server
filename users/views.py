@@ -53,7 +53,7 @@ class APIKeyGenerateView(View):
             email = request.COOKIES['business']
             user = Business.objects.get(email=email)
             context = {'api_keys': user.api_keys.all() }
-        except:
+        except (KeyError, Business.DoesNotExist):
             return redirect('home:home')
         return render(request, 'apikeys.html', context=context)
     
@@ -75,7 +75,7 @@ class APIKeyGenerateView(View):
                 api_key = ApiKey.objects.create(business=user, name=name)
             context = {'api_keys': user.api_keys.all() }
             print (user.api_keys.all())
-        except:
+        except (KeyError, Business.DoesNotExist):
             return redirect('home:home')
         return render(request, 'apikeys.html', context=context)
     
@@ -87,8 +87,6 @@ class DeleteAPIKey(View):
             user = Business.objects.get(email=email)
             ApiKey.objects.get(key=api_key, business=user).delete()
             context = {'api_keys': user.api_keys.all() }
-        except:
+        except (KeyError, Business.DoesNotExist):
             return redirect('home:home')
         return render(request, 'apikeys.html', context=context)
-
-
