@@ -14,8 +14,9 @@ urlpatterns = (
         path("api/", include("sellers.api")),
         path("api/", include("products.urls")),
         path("api/", include("orders.urls")),
-        path("api/", include("delivery.urls")),
+        path("api/", include("delivery.api")),
         path("seller/", include("sellers.urls")),
+        path("delivery/", include("delivery.urls")),
     ]
     + swagger_urls
     + [

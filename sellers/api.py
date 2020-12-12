@@ -7,7 +7,7 @@ router = DefaultRouter()
 router.register('seller', views.SellerViewSet, basename='seller')
 
 urlpatterns = [
+    path("seller/deliverylist/", views.deliverylist, name="list"),
+    path("seller/deliverypost/", views.deliverypost, name="post"),
     *router.urls,
-    path("deliverylist/", views.deliverylist, name="list"),
-    path("deliverypost/", views.deliverypost, name="post"),
 ]

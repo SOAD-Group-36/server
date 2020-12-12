@@ -1,11 +1,11 @@
-from auth.permissions import IsAuthenticated
+from auth.permissions import IsSeller
 from auth.authentication import SellerServicesAuthentication
 import requests
 from drf_yasg.utils import swagger_auto_schema
 from django.shortcuts import render, redirect
 from django.views import View
 from rest_framework import mixins
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -22,7 +22,7 @@ from delivery.serializers import LogisticSerializer, DeliverySerializer
 
 class SellerViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, GenericViewSet):
     authentication_classes = (SellerServicesAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsSeller,)
     parser_classes = (JSONParser,)
     renderer_classes = (JSONRenderer,)
     queryset = Seller.objects.all()
@@ -31,6 +31,8 @@ class SellerViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, GenericV
 
 @swagger_auto_schema(responses={200: LogisticSerializer(many=True)}, method='GET')
 @api_view(['GET'])
+@authentication_classes((SellerServicesAuthentication,))
+@permission_classes((IsSeller,))
 def deliverylist(request):
     logisticlist = LogisticServices.objects.all()
     serializer = LogisticSerializer(logisticlist, many=True)
@@ -39,6 +41,8 @@ def deliverylist(request):
 
 @swagger_auto_schema(request_body=SellerDeliverySerializer, method='POST')
 @api_view(['POST'])
+@authentication_classes((SellerServicesAuthentication,))
+@permission_classes((IsSeller,))
 def deliverypost(request):
     serializer = SellerDeliverySerializer(data=request.data)
     if serializer.is_valid():

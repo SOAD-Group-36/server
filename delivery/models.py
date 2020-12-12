@@ -19,6 +19,11 @@ class LogisticServices(Business):
     active = models.BooleanField(default=True)
     webhook_url = models.URLField(blank=True, null=True)
 
+    USERNAME_FIELD = 'email'
+
+    def __str__(self):
+        return self.first_name + self.last_name
+
 
 class Delivery(models.Model):
     class Status(models.TextChoices):

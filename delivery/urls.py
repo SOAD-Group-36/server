@@ -1,10 +1,7 @@
-from django.urls import path, include
-from rest_framework import routers
+from django.urls import path
 from delivery import views
 
-router = routers.DefaultRouter()
-router.register(r'Logisticservices', views.LogisticViewset)
 
 urlpatterns = [
-    path("logisticservices/", include(router.urls)),
+    path('register', views.LogisticServiceRegisterView.as_view(), name='delivery_register'),
 ]

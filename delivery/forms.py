@@ -13,7 +13,7 @@ class LogisticServiceForm(forms.ModelForm):
         fields = ['id', 'email', 'first_name', 'last_name', 'phone', 'address', 'pan', 'gst']
 
 
-class SellerRegistrationForm(UserCreationForm):
+class LogisticServiceRegistrationForm(UserCreationForm):
     address = AddressFormField()
 
     def address_fields(self):

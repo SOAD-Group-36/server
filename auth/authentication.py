@@ -50,7 +50,10 @@ class ApiKeyAuthentication(BaseAuthentication):
 
         if not token.business and not hasattr(token.business, self.related_name):
             raise AuthenticationFailed('User inactive or deleted.')
-        return (getattr(token.business, self.related_name), token)
+        try:
+            return (getattr(token.business, self.related_name), token)
+        except:
+            return None
 
     def authenticate_header(self, request):
         return self.keyword
