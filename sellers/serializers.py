@@ -1,7 +1,9 @@
+from delivery.models import LogisticServices
 from rest_framework.fields import CharField
 from rest_framework.serializers import ModelSerializer,Serializer,PrimaryKeyRelatedField
 
-from sellers.models import Seller,SellerDelivery
+from orders.models import Order
+from sellers.models import Seller
 from utils.address import AddressSerializerField
 
 
@@ -25,5 +27,5 @@ class SellerSerializer(ModelSerializer):
         extra_kwagrs = {'id': {'read_only': True}}
 
 class SellerDeliverySerializer(Serializer):
-    order = PrimaryKeyRelatedField()
-    serviceid = PrimaryKeyRelatedField()
+    order = PrimaryKeyRelatedField(queryset=Order.objects.all())
+    service = PrimaryKeyRelatedField(queryset=LogisticServices.objects.all())

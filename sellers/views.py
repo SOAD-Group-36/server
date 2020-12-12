@@ -40,19 +40,19 @@ def deliverylist(request):
 def deliverypost(request):
     serializer = SellerDeliverySerializer(data=request.data)
     if serializer.is_valid():
-        obj = serializer.save()
-        newobj = LogisticServices.objects.get(id=obj.deliveryid)
-        orderobj = Order.objects.get(id=obj.orderid)
-        deliveryobj = Delivery.objects.create(
-            order=orderobj , service = newobj ,receiver = orderobj.user, status = "Pr" ,origin = 
+        logistic_service =  serializer.validated_data.get('service')
+        order = serializer.validated_data.get('order')
+        delivery = Delivery.objects.create(
+            order=order, service =logistic_service, receiver=order.user, status="Pr",
+            origin=order.seller.address, current=order.seller.address, destination=order.address
         )
 
-        if newobj.webhook_url:
+        if logistic_service.webhook_url:
             print("Notifying Delivery guy")
-            serializer1 = DeliverySerializer(deliveryobj)
-            res = requests.request('POST', newobj.webhook_url, json=serializer1.data)
-    return Response(serializer1.data)
-
+            serializer1 = DeliverySerializer(delivery)
+            res = requests.request('POST', logistic_service.webhook_url, json=serializer1.data)
+        return Response(OrderSerializer(instance=order).data)
+    return Response(status=400)
 class SellerRegisterView(View):
     def get(self, request):
         form = SellerRegistrationForm()
