@@ -1,3 +1,4 @@
+from uuid import uuid4
 from utils.address import AddressField
 from django.db import models
 

@@ -32,11 +32,12 @@
         <div class="uk-card-body">
             <h3 class="uk-card-title">{{ product.name }}</h3>
             <p>{{ product.description }}</p>
-            {% if product.stock < 5 %}
-            <div class="uk-card-badge uk-label-warning uk-label">Only {{ product.stock }} Left</div>
-            {% endif %}
+            {% if product.stock < 5 %} <div class="uk-card-badge uk-label-warning uk-label">Only {{ product.stock }}
+                Left
         </div>
+        {% endif %}
     </div>
+</div>
 </div>
 <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
     <div class="uk-card-footer">
@@ -56,7 +57,8 @@
                 </label>
                 <div class="uk-form-controls">
                     <input class="uk-input" id="form-horizontal-text" name="{{ ad_field.name }}"
-                        type="{{ ad_field.widget_type }}" placeholder="{{ ad_field.attrs.placeholder }}" {% if ad_field.required %} required {% endif %}>
+                        type="{{ ad_field.widget_type }}" placeholder="{{ ad_field.attrs.placeholder }}" {% if
+                        ad_field.required %} required {% endif %}>
                 </div>
             </div>
             {% endfor %}
@@ -71,6 +73,51 @@
             </div>
             {% endif %}
             {% endfor %}
+
+            <div id="paypal-button"></div>
+            <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+            <script>
+                paypal.Button.render({
+                    // Configure environment
+                    env: 'sandbox',
+                    client: {
+                        sandbox: 'ARmAV0ee9-u-YafiB4TLhfdQArVTuK2zQ7x2fbs02fZd6TstVtkaChbDz7t0SDWFWZRbyezrs7edQuuk',
+                        production: 'n/a'
+                    },
+                    // Customize button (optional)
+                    locale: 'en_US',
+                    style: {
+                        size: 'small',
+                        color: 'gold',
+                        shape: 'pill',
+                    },
+
+                    // Enable Pay Now checkout flow (optional)
+                    commit: true,
+
+                    // Set up a payment
+                    payment: function (data, actions) {
+                        return actions.payment.create({
+                            transactions: [{
+                                amount: {
+                                    total: '{{ prduct.price }}',
+                                    currency: 'USD'
+                                }
+                            }]
+                        });
+                    },
+                    // Execute the payment
+                    onAuthorize: function (data, actions) {
+                        return actions.payment.execute().then(function () {
+                            // Show a confirmation message to the buyer
+                            window.alert('Thank you for your purchase!');
+                            window.location = '/';
+                        });
+                    }
+                }, '#paypal-button');
+
+            </script>
+
             <button class="uk-button u  k-button-primary uk-width-1-1 uk-margin-small-bottom">
                 Buy Now
             </button>
