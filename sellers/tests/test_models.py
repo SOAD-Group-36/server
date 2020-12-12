@@ -7,11 +7,16 @@ import datetime as dt
 class SellerModelTestCase(TestCase):
     def setUp(self) -> None:
         self.data = {
-            'first_name': "Bob", 'last_name': "builder", "phone": '1234567890', 'address': Address('123456', 'ss', 'cc', 'll', 'hn', 'sn'),
-            'pan': 'VKVG2URU2R', 'gst': '556876t97', 'webhook_url': 'http://localhost:8080/webhook/'
+            'first_name': "Bob",
+            'last_name': "builder",
+            "phone": '1234567890',
+            'address': Address('123456', 'ss', 'cc', 'll', 'hn', 'sn'),
+            'pan': 'VKVG2URU2R',
+            'gst': '556876t97',
+            'webhook_url': 'http://localhost:8080/webhook/',
         }
         self.seller = Seller.objects.create(**self.data)
-    
+
     def test_model_creation(self):
         self.assertTrue(Seller.objects.filter(first_name=self.data['first_name']).exists())
 

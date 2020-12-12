@@ -52,18 +52,19 @@ class APIKeyGenerateView(View):
         try:
             email = request.COOKIES['business']
             user = Business.objects.get(email=email)
-            context = {'api_keys': user.api_keys.all() }
+            context = {'api_keys': user.api_keys.all()}
         except (KeyError, Business.DoesNotExist):
             return redirect('home:home')
         return render(request, 'apikeys.html', context=context)
-    
+
     def post(self, request):
         context = {}
 
         from django import forms
+
         class APIForm(forms.Form):
             name = forms.CharField(max_length=80, required=False)
-        
+
         form = APIForm(request.POST)
 
         try:
@@ -71,14 +72,15 @@ class APIKeyGenerateView(View):
             user = Business.objects.get(email=email)
             print(user)
             if form.is_valid():
-                name=form.cleaned_data.get('name', '')
+                name = form.cleaned_data.get('name', '')
                 api_key = ApiKey.objects.create(business=user, name=name)
-            context = {'api_keys': user.api_keys.all() }
-            print (user.api_keys.all())
+            context = {'api_keys': user.api_keys.all()}
+            print(user.api_keys.all())
         except (KeyError, Business.DoesNotExist):
             return redirect('home:home')
         return render(request, 'apikeys.html', context=context)
-    
+
+
 class DeleteAPIKey(View):
     def get(self, request, api_key):
         context = {}
@@ -86,7 +88,7 @@ class DeleteAPIKey(View):
             email = request.COOKIES['business']
             user = Business.objects.get(email=email)
             ApiKey.objects.get(key=api_key, business=user).delete()
-            context = {'api_keys': user.api_keys.all() }
+            context = {'api_keys': user.api_keys.all()}
         except (KeyError, Business.DoesNotExist):
             return redirect('home:home')
         return render(request, 'apikeys.html', context=context)

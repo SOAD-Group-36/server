@@ -9,7 +9,7 @@ class User(AbstractUser):
     mobile = models.CharField(unique=True, max_length=12)
 
     is_business = False
-    
+
     @property
     def full_name(self):
         return self.get_full_name()
