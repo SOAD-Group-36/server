@@ -62,3 +62,8 @@ class ProductOrderPlaceView(LoginRequiredMixin, View):
             return redirect('home:home')
         print(form.errors)
         return render(request, 'home/product.html', context={'product': product, 'form': form})
+
+class OrderHistoryView(LoginRequiredMixin, View):
+    def get(self, request):
+        context = {'orders': request.user.orders.all()}
+        return render(request, 'home/orders.html', context=context)
